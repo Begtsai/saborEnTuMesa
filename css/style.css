@@ -1,0 +1,19 @@
+header {
+    background-color: #D90429;
+    height: 150px;
+    color: #EDF2F4;
+    font-family: Arial, Helvetica, sans-serif;
+    text-shadow: #2B2D42;
+    text-align: center;
+    padding: 25px;
+} 
+
+
+footer {
+    background-color: #D90429;
+    height: 75px;
+    color: #EDF2F4;
+    font-family: Arial, Helvetica, sans-serif;
+    text-shadow: #2B2D42;
+    text-align: center;
+}
