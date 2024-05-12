@@ -1,4 +1,5 @@
 // Array de productos (menú)
+
 const menu =[
     { 
         id: 1,
@@ -19,3 +20,17 @@ const menu =[
         price: 20
     }
     ];
+
+    // Función para cargar el menú desde un archivo JSON local utilizando fetch
+
+    async function cargarMenu() {
+        try {
+            // carga de datos desde un JSON local
+            const response = await fetch('menu.json');
+            menu = await response.json();
+            // manejo de promesas con fetch
+            mostrarMenu(); 
+        } catch (error) {
+            console.error('Error al cargar el menú', error);
+        }
+    }
