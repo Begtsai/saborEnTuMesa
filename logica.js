@@ -1,4 +1,4 @@
-// Array para alamacenar la orden del usuario
+// Array para almacenar la orden del usuario
 let comandaOrden = [];
 
 // Función para cargar el menú en la interfaz de usuario
@@ -11,7 +11,7 @@ function mostrarMenu() {
             <img src="${plato.imagen}" class="card-img-top" alt="${plato.name}">
             <div class="card-body">
                 <p class="card-text">${plato.name}</p>
-                <button class="btn btn-primary ordenar" id="${plato.id}">Agregar a la orden</button>;
+                <button class="btn btn-primary ordenar" id="${plato.id}">Agregar a la orden</button>
             </div>
         </div>`;
     });
@@ -27,6 +27,7 @@ function mostrarMenu() {
                 comandaOrden.push(platoSeleccionado);
                 guardarOrdenEnLocalStorage();
                 mostrarOrden();
+                calcularTotal();
             }
         });
     });
@@ -43,7 +44,7 @@ function mostrarMenu() {
             }
             return response.json();
         })
-        .tenh(data => {
+        .then(data => {
             console.log(data);
             const temperaturaActual = data.main.temp;
             console.log('Temperatura actual:', temperaturaActual);
@@ -64,6 +65,7 @@ function cargarOrdenDesdeLocalStorage() {
     if (ordenGuardada) {
         comandaOrden = JSON.parse(ordenGuardada);
         mostrarOrden();
+        calcularTotal();
         }
 }
 
@@ -75,10 +77,45 @@ const contenedorOrden = document.querySelector('.comandaOrden');
             ordenHTML += `<p>${plato.name}</p>`;
         });
         contenedorOrden.innerHTML = ordenHTML;
-    }
+}
 
-    // Cargar el menú y la orden al cargar la página
-    document.addEventListener('DOMContentLoaded', () => {
-        cargarMenu();
-        cargarOrdenDesdeLocalStorage();
-    });
+// Función para calcular el total del pedido
+function calcularTotal() {
+    const total = comandaOrden.reduce((sum, item) => sum + item.price, 0);
+    const totalContainer = document.querySelector('.total-container');
+    if(!totalContainer) {
+        const newTotalContainer = document.createElement('div');
+        newTotalContainer.classList.add('total-container', 'mt-4');
+        newTotalContainer.innerHTML = `<2>Total: $${total}</h2>`;
+        document.querySelector('main').appendChild(newTotalContainer)
+    } else {
+        totalContainer.innerHTML = `<h2>Total: $${total}</h2>`;
+    }
+}
+
+// Función para finalizar la compra
+function finalizarCompra () {
+    if (comandaOrden.length === 0) {
+        alert('El carrito está vacío');
+        return;
+    }
+    alert('Compra finalizada');
+    comandaOrden = [];
+    guardarOrdenEnLocalStorage();
+    mostrarOrden();
+    document.querySelector('.total-container').innerHTML = '<h2>Total: $0</h2>';
+}
+
+// Añadir botón de finalizar compra
+document.addEventListener('DOMContentLoaded', () => {
+    cargarMenu();
+    cargarOrdenDesdeLocalStorage();
+
+    const finalizarBtn = document.createElement('button');
+    finalizarBtn.classList.add('btn', 'btn-success', 'mt-4');
+    finalizarBtn.textContent = 'Finalizar Compra';
+    finalizarBtn.addEventListener('click', finalizarCompra);
+    document.querySelector('main').appendChild(finalizarBtn);
+});
+
+
