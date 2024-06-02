@@ -1,3 +1,20 @@
+// Función para cargar el menú desde un archivo JSON local utilizando fetch
+
+async function cargarMenu() {
+    try {
+        // carga de datos desde un JSON local
+        const response = await fetch('./menu.json');
+        if(!response.ok) {
+            throw new Error ('Error al cargar el archivo JSON');
+        }
+        menu = await response.json();
+        // manejo de promesas con fetch
+        mostrarMenu(); 
+    } catch (error) {
+        console.error('Error al cargar el menú', error);
+    }
+}
+
 // Array para almacenar la orden del usuario
 let comandaOrden = [];
 
