@@ -86,7 +86,7 @@ function calcularTotal() {
     if(!totalContainer) {
         const newTotalContainer = document.createElement('div');
         newTotalContainer.classList.add('total-container', 'mt-4');
-        newTotalContainer.innerHTML = `<2>Total: $${total}</h2>`;
+        newTotalContainer.innerHTML = `<h2>Total: $${total}</h2>`;
         document.querySelector('main').appendChild(newTotalContainer)
     } else {
         totalContainer.innerHTML = `<h2>Total: $${total}</h2>`;

@@ -26,7 +26,7 @@ let menu =[
 async function cargarMenu() {
     try {
         // carga de datos desde un JSON local
-        const response = await fetch('menu.json');
+        const response = await fetch('./menu.js');
         if(!response.ok) {
             throw new Error ('Error al cargar el archivo JSON');
         }
